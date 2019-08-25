@@ -1,0 +1,83 @@
+ROUTER R1
+ena
+conf t
+hostname R1
+enable  secret  class
+banner motd 'Buenos dias'
+line con 0
+password cisco
+login
+line vty 0 15 
+password cisco
+service password-encryption
+no ip domain-lookup
+interface  gig0/0
+ip add 192.168.1.1 255.255.255.0
+no sh
+interface se0/1/0
+ip add 192.168.2.1 255.255.255.0
+no sh
+route rip
+network 192.168.1.0
+network 192.168.1.0
+end
+copy run start
+
+ROUTER R2
+ena
+conf t
+hostname R2
+enable  secret  class
+banner motd 'Buenos dias'
+line con 0
+password cisco
+login
+line vty 0 15 
+password cisco
+service password-encryption
+no ip domain-lookup
+interface  gig0/0
+ip add 192.168.3.1 255.255.255.0
+no sh
+interface se0/1/0
+ip add 192.168.2.2 255.255.255.0
+no sh
+interface se0/1/1
+ip add 192.168.4.2 255.255.255.0
+no sh
+route rip
+network 192.168.2.0
+network 192.168.3.0
+network 192.168.4.0
+end
+copy run start
+
+
+
+
+ROUTER R3
+ena
+conf t
+hostname R3
+enable  secret  class
+banner motd 'Buenos dias'
+line con 0
+password cisco
+login
+line vty 0 15 
+password cisco
+service password-encryption
+no ip domain-lookup
+interface  gig0/0
+ip add 192.168.5.1 255.255.255.0
+no sh
+interface se0/1/0
+ip add 192.168.4.1 255.255.255.0
+no sh
+route rip
+network 192.168.4.0
+network 192.168.5.0
+end
+copy run start
+
+//V1

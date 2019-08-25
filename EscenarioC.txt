@@ -1,0 +1,19 @@
+R2
+router rip
+no network 192.168.4.0
+
+................................
+ip route 0.0.0.0 0.0.0.0 serial 0/0/1
+router rip
+default-information originate
+
+
+R3
+no router rip
+
+ip route 172.30.0.0 255.255.252.0 serial0/0/1
+...............................
+
+
+
+ripv1

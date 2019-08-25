@@ -1,0 +1,175 @@
+R1
+
+config t 
+ipv6 unicast-routing
+int fa0/0
+ipv6 enable 
+ipv6 add 2001:DB8:ACAD:A::1/64
+no sh
+
+int se0/0/0
+ipv6 add 2001:DB8:ACAD:12::1/64
+no sh
+
+ipv6 unicast-routing
+int fa0/0 
+ipv6 add FE80::1 link-local
+no sh
+
+int se0/0/0
+ipv6 add FE80::1 link-local
+no sh
+
+
+///Routing ( esto no ) 
+R1(config)#ipv6 unicast-routing 
+R1(config)#ipv6 router rip CISCO
+R1(config-rtr)#int fa0/0
+R1(config-if)#ipv6  rip CISCO enable 
+R1(config-if)#int se0/0/0
+R1(config-if)#ipv6  rip CISCO enable
+R1(config-if)#end
+
+copy run start
+
+
+
+//RIPng
+R1(config)#interface fa0/0
+R1(config-if)#ipv6 rip Test1 enable 
+R1(config-if)#interface se0/0/0
+R1(config-if)#ipv6 rip Test1 enable 
+R1(config-if)#end
+R1#
+%SYS-5-CONFIG_I: Configured from console by console
+
+copy run start
+
+
+
+//****R2***//
+R2(config)#ipv6 unicast-routing 
+R2(config)#int se0/0/0
+R2(config-if)#int fa0/0
+R2(config-if)#ipv6 enable 
+R2(config-if)#ipv6 add 2001:DB8:ACAD:B::2/64
+R2(config-if)#no sh
+R2(config-if)#
+
+
+R2(config)#int se0/0/0
+R2(config-if)#ipv6 enable
+R2(config-if)#ipv6 add 2001:DB8:ACAD:12::2/64
+R2(config-if)#no sh
+R2(config-if)#
+
+R2(config)#int se0/0/1
+R2(config-if)#ipv6 enable
+R2(config-if)#ipv6 add 2001:DB8:ACAD:23::2/64
+R2(config-if)#no sh
+R2(config-if)#
+
+
+R2(config)#ipv6 unicast-routing
+R2(config)#int fa0/0
+R2(config-if)#ipv6 enable 
+R2(config-if)#ipv6 add FE80::2 link-local
+R2(config-if)#no sh
+R2(config-if)#
+
+R2(config)#int se0/0/0 
+R2(config-if)#ipv6 enable 
+R2(config-if)#ipv6 add FE80::2 link-local
+R2(config-if)#no sh
+R2(config-if)#
+
+R2(config)#int se0/0/1
+R2(config-if)#ipv6 enable
+R2(config-if)#ipv6 add FE80::2 link-local
+R2(config-if)#no sh
+R2(config-if)#
+
+
+//Routing (esto no ) 
+R2(config)#ipv6 unicast-routing 
+R2(config)#ipv6 router rip CISCO
+R2(config-rtr)#int fa0/0
+R2(config-if)#ipv6  rip CISCO enable
+R2(config-if)#int se0/0/0
+R2(config-if)#ipv6  rip CISCO enable 
+R2(config-if)#int s0/0/1
+R2(config-if)#ipv6 rip CISCO enable
+R2(config-if)#end
+R2#
+%SYS-5-CONFIG_I: Configured from console by console
+
+R2#copy run start
+Destination filename [startup-config]? 
+Building configuration...
+[OK]
+R2#
+
+
+
+//RIPng
+R2(config-if)#interface se0/0/0
+R2(config-if)# ipv6 rip Test2 enable
+R2(config-if)#interface se0/0/1
+R2(config-if)# ipv6 rip Test2 enable
+R2(config-if)#end
+R2#
+%SYS-5-CONFIG_I: Configured from console by console
+
+R2#copy run start
+Destination filename [startup-config]? 
+Building configuration...
+[OK]
+R2#
+
+//****R3***//
+
+R3(config)#int fa0/0
+R3(config-if)#ipv6 unicast-routing 
+R3(config)#int fa0/0
+R3(config-if)#ipv6 enable 
+R3(config-if)#ipv6 add 2001:DB8:ACAD:C::3/64
+R3(config-if)#no sh
+R3(config-if)#
+
+R3(config)#int se0/0/1
+R3(config-if)#ipv6 enable 
+R3(config-if)#ipv6 add 2001:DB8:ACAD:23::3/64
+R3(config-if)#no sh
+R3(config-if)#
+
+
+
+R3(config)#ipv6 unicast-routing
+R3(config)#int fa0/0
+R3(config-if)#ipv6 enable 
+R3(config-if)#ipv6 add FE80::3 link-local
+R3(config-if)#no sh
+R3(config-if)#
+
+R3(config)#int se0/0/1
+R3(config-if)#ipv6 enable 
+R3(config-if)#ipv6 add FE80::3 link-local
+R3(config-if)#no sh
+R3(config-if)#
+
+//Routing 
+R3(config)#ipv6 unicast-routing 
+R3(config)#ipv6 router rip CISCO
+R3(config-rtr)#int fa0/0 
+R3(config-if)#ipv6 rip CISCO enable
+R3(config-if)#int se0/0/1
+R3(config-if)#ipv6 rip CISCO enable
+R3(config-if)#end
+R3#
+%SYS-5-CONFIG_I: Configured from console by console
+
+R3#copy run start
+Destination filename [startup-config]? 
+Building configuration...
+[OK]
+R3#

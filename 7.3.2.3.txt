@@ -1,0 +1,28 @@
+R1
+ipv6 unicast-routing
+ipv6 router rip CISCO
+
+int g0/0
+ipv6 rip CISCO enable
+int s0/0/0
+ipv6 rip CISCO enable
+
+R2
+ipv6 unicast-routing
+ipv6 router rip CISCO
+
+int g0/0
+ipv6 rip CISCO enable
+int s0/0/0
+ipv6 rip CISCO enable
+int s0/0/1
+ipv6 rip CISCO enable
+
+R3
+ipv6 unicast-routing
+ipv6 router rip CISCO
+
+int g0/0
+ipv6 rip CISCO enable
+int s0/0/1
+ipv6 rip CISCO enable
