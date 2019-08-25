@@ -1,0 +1,32 @@
+ROUTER 1
+enable
+conf t
+hostname Culiacan
+interface fa0/0
+ip add 10.0.0.1 255.0.0.0
+no sh
+
+interface se2/0
+ip add 128.165.0.1 255.255.0.0
+no sh
+
+ip route 192.168.2.0 255.255.255.0 128.165.0.2
+ip route 192.168.3.0 255.255.255.0 128.165.0.2
+
+----------------------
+ROUTER 2
+enable
+conf t
+hostname Navolato
+
+interface fa0/0
+ip add 192.168.2.1 255.255.255.0
+no sh
+interface fa1/0
+ip add 192.168.3.1 255.255.255.0
+no sh
+interface se2/0
+ip add 128.165.0.2  255.255.0.0
+no sh
+
+ip route 10.0.0.0 255.0.0.0 128.165.0.1
